@@ -5,6 +5,7 @@ import 'package:futurama/modules/home/home_screen.dart';
 import 'package:futurama/modules/quiz/quiz_provider.dart';
 import 'package:futurama/modules/quiz/quiz_screen.dart';
 import 'package:futurama/modules/home/futurama_info_provider.dart';
+import 'package:futurama/src/utils/theme/theme.dart';
 import 'package:provider/provider.dart';
 
 class FuturamaApp extends StatelessWidget {
@@ -21,9 +22,10 @@ class FuturamaApp extends StatelessWidget {
       // create: (_) => FuturamaInfoProvider(),
       child: MaterialApp(
         title: 'Futurama',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
+        theme: FuturamaTheme.lightTheme,
+        darkTheme: FuturamaTheme.darkTheme,
+        themeMode: ThemeMode.system,
+        debugShowCheckedModeBanner: false,
         home: const HomeScreen(),
         routes: {
           CharactersScreen.routeName: (_) => const CharactersScreen(),
