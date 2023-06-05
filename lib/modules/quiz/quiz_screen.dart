@@ -34,55 +34,57 @@ class QuizScreen extends StatelessWidget {
   Widget _buildQuestionPage(QuizProvider provider, BuildContext context) {
     final currentQuestion = provider.currentQuestion;
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(right: 16),
-              child: Text(
-                "Score:  ${provider.score}",
-                style: const TextStyle(
-                    fontSize: 16,
-                    color: Colors.green,
-                    fontWeight: FontWeight.bold),
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(right: 16),
+                child: Text(
+                  "Score:  ${provider.score}",
+                  style: const TextStyle(
+                      fontSize: 16,
+                      color: Colors.green,
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+            ],
+          ),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Text(
+              currentQuestion.question,
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+          ),
+          const SizedBox(height: 8),
+          Column(
+            children: List<Widget>.generate(
+              currentQuestion.possibleAnswers.length,
+              (optionIndex) => RadioListTile<int>(
+                title: Text(currentQuestion.possibleAnswers[optionIndex]),
+                value: optionIndex,
+                groupValue: provider.currentSelectedAnswerIndex,
+                onChanged: (value) {
+                  provider.selectAnswer(optionIndex);
+                },
               ),
             ),
-          ],
-        ),
-        Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Text(
-            currentQuestion.question,
-            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
-        ),
-        const SizedBox(height: 8),
-        Column(
-          children: List<Widget>.generate(
-            currentQuestion.possibleAnswers.length,
-            (optionIndex) => RadioListTile<int>(
-              title: Text(currentQuestion.possibleAnswers[optionIndex]),
-              value: optionIndex,
-              groupValue: provider.currentSelectedAnswerIndex,
-              onChanged: (value) {
-                provider.selectAnswer(optionIndex);
+          if (provider.isAnswered) const SizedBox(height: 16),
+          if (provider.isAnswered)
+            ElevatedButton(
+              onPressed: () {
+                provider.submitAnswer(() => provider.onComplete(context));
               },
+              child: const Text('Submit'),
             ),
-          ),
-        ),
-        if (provider.isAnswered) const SizedBox(height: 16),
-        if (provider.isAnswered)
-          ElevatedButton(
-            onPressed: () {
-              provider.submitAnswer(() => provider.onComplete(context));
-            },
-            child: const Text('Submit'),
-          ),
-        const SizedBox(height: 16),
-      ],
+          const SizedBox(height: 16),
+        ],
+      ),
     );
   }
 }
