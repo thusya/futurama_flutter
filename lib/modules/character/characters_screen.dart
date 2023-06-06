@@ -25,38 +25,56 @@ class CharactersScreen extends StatelessWidget {
                   ? const InfoWidget(message: "No characters available")
                   : Padding(
                       padding: const EdgeInsets.symmetric(vertical: 16),
-                      child: ListView.separated(
+                      child: ListView.builder(
                         itemCount:
                             charactersProvider.futuramaCharacters!.length,
                         itemBuilder: (context, index) {
                           final character =
                               charactersProvider.futuramaCharacters![index];
-                          return ListTile(
-                            leading: Padding(
-                              padding: const EdgeInsets.only(bottom: 4),
-                              child: Image.network(
-                                character.images.main,
-                                height: 100,
-                                width: 40,
-                                fit: BoxFit.contain,
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 10, horizontal: 16),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius:
+                                    const BorderRadius.all(Radius.circular(8)),
+                                color: Theme.of(context).cardColor,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Theme.of(context).shadowColor,
+                                    offset: const Offset(0.0, 0.5), //(x,y)
+                                    blurRadius: 0.1,
+                                  ),
+                                ],
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: ListTile(
+                                  leading: Image.network(
+                                    character.images.main,
+                                    height: 100,
+                                    width: 40,
+                                    fit: BoxFit.contain,
+                                  ),
+                                  title: Text(character.name.getFullName()),
+                                  subtitle: character.occupation.isNotEmpty
+                                      ? Text(character.occupation)
+                                      : const Text("No Occupation"),
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            CharacterDetailsScreen(
+                                                character: character),
+                                      ),
+                                    );
+                                  },
+                                ),
                               ),
                             ),
-                            title: Text(character.name.getFullName()),
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => CharacterDetailsScreen(
-                                      character: character),
-                                ),
-                              );
-                            },
                           );
                         },
-                        separatorBuilder: (BuildContext context, int index) =>
-                            const Divider(
-                          indent: 56,
-                        ),
                       ),
                     ),
     );

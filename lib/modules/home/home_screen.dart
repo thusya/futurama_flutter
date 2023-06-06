@@ -31,6 +31,7 @@ class HomeScreen extends StatelessWidget {
                               shrinkWrap: true,
                               children: provider.futuramaInfoList!
                                   .map((e) => Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                           Text(
                                             e.synopsis,
@@ -41,21 +42,49 @@ class HomeScreen extends StatelessWidget {
                                           const SizedBox(
                                             height: 16,
                                           ),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
+                                          const Text(
+                                            "Years Aired",
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          const SizedBox(
+                                            height: 8,
+                                          ),
+                                          Column(children: [
+                                            Text(
+                                              e.yearsAired,
+                                              style: const TextStyle(
+                                                fontSize: 16,
+                                              ),
+                                            ),
+                                          ]),
+                                          const SizedBox(
+                                            height: 16,
+                                          ),
+                                          const Text(
+                                            "Creators",
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          const SizedBox(
+                                            height: 8,
+                                          ),
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
                                             children: e.creators
                                                 .map(
                                                   (c) => Text(
                                                     c.name,
                                                     style: const TextStyle(
-                                                        fontSize: 16,
-                                                        fontWeight:
-                                                            FontWeight.bold),
+                                                      fontSize: 16,
+                                                    ),
                                                   ),
                                                 )
                                                 .toList(),
-                                          )
+                                          ),
                                         ],
                                       ))
                                   .toList(),

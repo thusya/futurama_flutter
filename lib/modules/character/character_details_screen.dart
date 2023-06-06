@@ -50,7 +50,7 @@ class CharacterDetailsScreen extends StatelessWidget {
                             BoxShadow(
                               color: Theme.of(context).shadowColor,
                               offset: const Offset(0.0, 1.0), //(x,y)
-                              blurRadius: 6.0,
+                              blurRadius: 3.0,
                             ),
                           ],
                         ),
